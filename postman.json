@@ -1,0 +1,721 @@
+{
+  "info": {
+    "_postman_id": "random-uuid",
+    "name": "Music Library API Collection",
+    "description": "A collection for testing the Music Library Management API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "sdktgjrsiogusoigjsevntekltjerwiotejyejyoihjykhlrur6i6ykryko4tjesp4toeskyely",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["signup"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.environment.set(\"token\", jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"password\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users?limit=5&offset=0&role=Editor",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "key": "role",
+                  "value": "Editor"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"editor@example.com\",\n    \"password\": \"password\",\n    \"role\": \"editor\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/add-user",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "add-user"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "user-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"old_password\": \"oldPassword\",\n    \"new_password\": \"newPassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/update-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "update-password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Artists",
+      "item": [
+        {
+          "name": "Get All Artists",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/artists?limit=5&offset=0&grammy=10&hidden=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["artists"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "key": "grammy",
+                  "value": "10"
+                },
+                {
+                  "key": "hidden",
+                  "value": "false"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Artist by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/artists/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["artists", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "artist-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Artist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Eminem\",\n    \"grammy\": 15,\n    \"hidden\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/artists/add-artist",
+              "host": ["{{baseUrl}}"],
+              "path": ["artists", "add-artist"]
+            }
+          }
+        },
+        {
+          "name": "Update Artist",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Eminem (Slim Shady)\",\n    \"grammy\": 18,\n    \"hidden\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/artists/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["artists", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "artist-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Artist",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/artists/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["artists", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "artist-id-here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Albums",
+      "item": [
+        {
+          "name": "Get All Albums",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albums?limit=5&offset=0&artist_id=artist-id-here&hidden=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["albums"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "key": "artist_id",
+                  "value": "artist-id-here"
+                },
+                {
+                  "key": "hidden",
+                  "value": "false"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Album by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albums/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["albums", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "album-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add Album",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"artist_id\": \"artist-id-here\",\n    \"name\": \"Marshall Mathers LP\",\n    \"year\": 2000,\n    \"hidden\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/albums/add-album",
+              "host": ["{{baseUrl}}"],
+              "path": ["albums", "add-album"]
+            }
+          }
+        },
+        {
+          "name": "Update Album",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Marshall Mathers LP 2\",\n    \"year\": 2013,\n    \"hidden\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/albums/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["albums", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "album-id-here"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Album",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/albums/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["albums", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "album-id-here"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "name": "Tracks",
+          "item": [
+            {
+              "name": "Get Track by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tracks/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tracks", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "track-id-here"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Add Track",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"artist_id\": \"artist-id-here\",\n    \"album_id\": \"album-id-here\",\n    \"name\": \"Not Afraid\",\n    \"duration\": 263,\n    \"hidden\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tracks/add-track",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tracks", "add-track"]
+                }
+              }
+            },
+            {
+              "name": "Update Track",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Not Afraid (Explicit)\",\n    \"duration\": 263,\n    \"hidden\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/tracks/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tracks", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "track-id-here"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Delete Track",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tracks/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["tracks", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "track-id-here"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Favorites",
+          "item": [
+            {
+              "name": "Get Favorites by Category",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/favorites/:category?limit=5&offset=0",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", ":category"],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "5"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "category",
+                      "value": "artist"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Add Favorite",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"category\": \"artist\",\n    \"item_id\": \"artist-id-here\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/favorites/add-favorite",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", "add-favorite"]
+                }
+              }
+            },
+            {
+              "name": "Remove Favorite",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/favorites/remove-favorite/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["favorites", "remove-favorite", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "favorite-id-here"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
