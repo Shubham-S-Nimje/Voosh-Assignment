@@ -7,7 +7,7 @@ exports.getFavoritesByCategory = async (req, res) => {
   try {
     const { category } = req.params;
     const { limit, offset } = req.query;
-    const userId = req.user.id;
+    const userId = req.user.userId;
 
     if (!["artist", "album", "track"].includes(category)) {
       return res.status(400).json({
@@ -19,6 +19,7 @@ exports.getFavoritesByCategory = async (req, res) => {
     }
 
     const favorites = await Favorite.findAll({
+      where: { user_id: userId },
       limit: parseInt(limit),
       offset: parseInt(offset),
       include: [
