@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 const { authenticate } = require("../middlewares/auth");
 const { authorize } = require("../middlewares/auth");
 
-router.get("/", authenticate, userController.getAllUsers);
+router.get("/", authenticate, authorize(["admin"]), userController.getAllUsers);
 router.post(
   "/add-user",
   authenticate,
@@ -20,7 +20,7 @@ router.delete(
 router.put(
   "/update-password",
   authenticate,
-  authorize(["admin"]),
+  authorize(["admin", "editor", "viewer"]),
   userController.updatePassword
 );
 

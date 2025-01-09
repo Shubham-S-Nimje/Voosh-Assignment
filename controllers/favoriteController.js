@@ -43,7 +43,7 @@ exports.getFavoritesByCategory = async (req, res) => {
       ],
     });
 
-    console.log(favorites);
+    // console.log(favorites);
 
     const formattedFavorites = favorites.map((fav) => ({
       favorite_id: fav.favoriteId,
@@ -117,7 +117,7 @@ exports.addFavorite = async (req, res) => {
       });
     }
 
-    console.log(item);
+    // console.log(item);
 
     // Check if already favorited
     const existing = await Favorite.findOne({

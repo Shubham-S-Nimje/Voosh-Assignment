@@ -13,10 +13,18 @@ exports.getAllArtists = async (req, res) => {
       limit: parseInt(limit),
       offset: parseInt(offset),
     });
+    // console.log(artists);
+
+    const formattedArtists = artists.map((artist) => ({
+      artist_id: artist?.artistId,
+      name: artist?.name,
+      grammy: artist?.grammy,
+      hidden: artist?.hidden,
+    }));
 
     res.status(200).json({
       status: 200,
-      data: artists,
+      data: formattedArtists,
       message: "Artists retrieved successfully.",
       error: null,
     });
@@ -46,7 +54,12 @@ exports.getArtistById = async (req, res) => {
 
     res.status(200).json({
       status: 200,
-      data: artist,
+      data: {
+        artist_id: artist?.artistId,
+        name: artist?.name,
+        grammy: artist?.grammy,
+        hidden: artist?.hidden,
+      },
       message: "Artist retrieved successfully.",
       error: null,
     });

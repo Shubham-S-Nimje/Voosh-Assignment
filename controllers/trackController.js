@@ -52,7 +52,7 @@ exports.getAllTracks = async (req, res) => {
       error: null,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({
       status: 400,
       data: null,
@@ -66,12 +66,14 @@ exports.getTrackById = async (req, res) => {
   try {
     const { id } = req.params;
     const track = await Track.findByPk(id);
-    const album = await Track.findOne({
+    const album = await Album.findOne({
       where: { album_id: track?.album_id },
     });
-    const artist = await Track.findOne({
+    const artist = await Artist.findOne({
       where: { artist_id: track?.artist_id },
     });
+
+    // console.log(artist);
 
     if (!track) {
       return res.status(404).json({

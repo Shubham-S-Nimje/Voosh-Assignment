@@ -36,8 +36,8 @@ A comprehensive backend API for managing music libraries, supporting authenticat
 
 - **Node.js**: Backend runtime.
 - **Express.js**: Framework for building RESTful APIs.
-- **MongoDB**: Database for storing application data.
-- **Mongoose**: Object Data Modeling (ODM) for MongoDB.
+- **MySQL**: Relational database for storing application data.
+- **Sequelize**: ORM (Object Relational Mapping) for MySQL, providing an abstraction for database interactions.
 - **JWT**: Token-based authentication.
 - **Bcrypt.js**: Password hashing for secure authentication.
 
@@ -69,32 +69,46 @@ project/
 
 ### **Setup Instructions**
 
-1. **Clone the Repository**
+1.  **Clone the Repository**
 
-   ```bash
-   git clone https://github.com/<your-username>/music-library-api.git
-   cd music-library-api
-   ```
+    ```bash
+    git clone https://github.com/<your-username>/music-library-api.git
+    cd music-library-api
+    ```
 
-2. **Install Dependencies**
+2.  **Install Dependencies**
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
-3. **Configure Environment Variables**
+3.  **Configure Environment Variables**
 
-   - Create a `.env` file in the root directory:
-     ```env
-     MONGO_URI=<your-mongodb-connection-string>
-     JWT_SECRET=<your-secret-key>
-     PORT=3000
-     ```
+    - Create a `.env` file in the root directory:
 
-4. **Start the Server**
-   ```bash
-   npm start
-   ```
+      ```env
+      # Application Settings
+
+      BASE_URL=<base-url>
+      PORT=3000
+
+      # Database Configuration
+
+      DB_HOST=""
+      DB_PORT=""
+      DB_NAME=""
+      DB_USERNAME=""
+      DB_PASSWORD=""
+
+      # JWT Configuration
+
+      JWT_SECRET=<your-secret-key>
+      ```
+
+4.  **Start the Server**
+    ```bash
+    npm run dev
+    ```
 
 ---
 
@@ -172,5 +186,3 @@ Contributions are welcome! Feel free to:
 ---
 
 Feel free to customize this README.md to suit your specific project details, such as adding deployment instructions or additional features. 🚀
-
-# Voosh-Assignment

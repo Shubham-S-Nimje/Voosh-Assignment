@@ -37,7 +37,7 @@ exports.getAllAlbums = async (req, res) => {
       status: 200,
       data: {
         album_id: album?.[0]?.albumId,
-        artist_name: album?.[0]?.name,
+        artist_name: artists?.name,
         name: album?.[0]?.name,
         year: album?.[0]?.year,
         hidden: album?.[0]?.hidden,
@@ -68,12 +68,22 @@ exports.getAlbumById = async (req, res) => {
         error: null,
       });
     }
+    const artist = await Artist.findByPk(album?.artist_id);
+
+    if (!artist) {
+      return res.status(404).json({
+        status: 404,
+        data: null,
+        message: "Resource Doesn't Exist",
+        error: null,
+      });
+    }
 
     res.status(200).json({
       status: 200,
       data: {
         album_id: album?.albumId,
-        artist_name: album?.name,
+        artist_name: artist?.name,
         name: album?.name,
         year: album?.year,
         hidden: album?.hidden,

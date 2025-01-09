@@ -121,7 +121,7 @@ exports.updatePassword = async (req, res) => {
     // console.log(req.user);
     const user = await User.findByPk(req.user.userId);
 
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return res.status(401).json({
         status: 404,
